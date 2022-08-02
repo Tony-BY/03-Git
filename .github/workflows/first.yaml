@@ -21,6 +21,6 @@ jobs:
            counter=0
            for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
              echo "Tab counter in ${file} is $(grep -c \t ${file})"
-             counter=$($counter+$(grep -c \t ${file}))
+             counter += $(grep -c \t ${file})
            done
              echo "Total tabs is $counter"
