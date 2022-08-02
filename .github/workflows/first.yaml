@@ -1,0 +1,42 @@
+name: Count tabs in code
+
+on:
+  pull_request:
+     branches:
+       - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Test changed files
+    steps:
+      - uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v24
+
+      - name: Count tabs in changed files
+        run: |
+           for file in ${{ steps.changed-files.outputs.all_cahnged_files }}; do
+           echo "Tab counter in ${file} is $(grep -c \t ${file})"
+           done
+
+
+    
+
+#jobs:
+#  prepare:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: echo "The ${{ github.repository }} repository will be cloned to the runner."
+#      - uses: actions/checkout@v1
+#      - name: Find changed files
+#      - uses: jitterbit/get-changed-files@v1
+#      - run: |
+#         for changed_file in ${{ steps.files.outputs.all }}; do
+#              echo "Tab counter in ${changed_file} is $(grep -c \t ${changed_file})"
+#          done    
+
