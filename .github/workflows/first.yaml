@@ -9,6 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Test changed files
+    strategy:
+      matrix: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
       - uses: actions/checkout@v3
 
@@ -17,10 +19,9 @@ jobs:
         uses: tj-actions/changed-files@v24
 
       - name: Count tabs in changed files
-        run: |
-           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-             echo "Tab counter in ${file} is $(grep -c \t ${file})" >> tabs_in_code.log
-           done
+        run: echo "Tab counter in ${{ steps.changed-files.outputs.all_changed_files }} is $(grep -c \t ${{ steps.changed-files.outputs.all_changed_files }})" >> tabs_in_code.log
+            
+           
 
       - name: Upload report
         uses: actions/upload-artifact@v2     
