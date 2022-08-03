@@ -19,6 +19,10 @@ jobs:
       - name: Count tabs in changed files
         run: |
            for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-             echo "Tab counter in ${file} is $(grep -c \t ${file})"
+             echo "Tab counter in ${file} is $(grep -c \t ${file})" >> tabs_in_code.log
            done
-            
+
+      - name: Upload report
+        uses: actions/upload-artifact@v2     
+        with:
+          path: tabs_in_code.log    
