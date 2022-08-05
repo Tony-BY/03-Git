@@ -9,13 +9,13 @@ jobs:
   list-files:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.changed-files.outputs.all_changed_files }}
     name: Generate matrix
     steps:
-       - name: Set matrix
-         uses: actions/checkout@v3
-       - id: set-matrix
-         run: echo "::set-output name=matrix::$(git diff --name-only HEAD~1 | jq -R -s -c 'split("\n")[:-1]')"
+       - name: Checkout
+         uses: actions/checkout@v2
+       - name: Get changed files  
+         uses: tj-actions/changed-files@v24
   
   check:
     needs: list-files
@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Count tabs in ${{ matrix.changed-files }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       - run: echo "Tab counter in ${{ matrix.changed-files }} is $(grep -c \t ${{ matrix.cahnged-files }})" >> tabs_in_code.log       
 
       - name: Upload report
