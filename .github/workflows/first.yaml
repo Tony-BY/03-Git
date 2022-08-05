@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Count tabs in ${{ matrix.changed-files }}
         uses: actions/checkout@v3
-        run: echo "Tab counter in ${{ matrix.changed-files }} is $(grep -c \t ${{ matrix.cahnged-files }})" >> tabs_in_code.log       
+      - run: echo "Tab counter in ${{ matrix.changed-files }} is $(grep -c \t ${{ matrix.cahnged-files }})" >> tabs_in_code.log       
 
       - name: Upload report
         uses: actions/upload-artifact@v2     
