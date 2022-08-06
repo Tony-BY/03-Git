@@ -10,9 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Count tabs in changed files
     steps:
-      - name: Clone repository
-        run: echo "The ${{ github.repository }} repository will be cloned to the runner"
-        uses: actions/checkout@v3
+      - run: echo "The ${{ github.repository }} repository will be cloned to the runner"
+      - uses: actions/checkout@v3
 
       - name: Get changed files
         id: changed-files
